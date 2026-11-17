@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datawriter, By CUAI：使用说明（Beta 0.5）</title>
+<style>
+  :root { --green: #2f5a33; --ink: #162016; --muted: #56625a; --line: #dde4dd; --soft: #f3f6f3; --red: #c62828; --amber: #e0a100; --purple: #7b3fa0; --orange: #e8730c; --brown: #7a5230; --ok: #2e7d32; --grey: #8a8f8a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 24px 48px; max-width: 820px; margin-inline: auto; font: 15px/1.5 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: #fff; }
+  header { border-bottom: 3px solid var(--green); padding-bottom: 14px; margin-bottom: 24px; }
+  h1 { margin: 0; font-size: 30px; color: var(--green); letter-spacing: -0.3px; }
+  h1 small { display: block; font-size: 15px; font-weight: 500; color: var(--muted); margin-top: 4px; }
+  h2 { font-size: 20px; color: var(--green); margin: 30px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 4px; break-after: avoid; }
+  h3 { font-size: 16px; margin: 18px 0 6px; break-after: avoid; }
+  p, li { margin: 0 0 8px; }
+  ol, ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  kbd { font: 12px/1 ui-monospace, Consolas, monospace; border: 1px solid #bbb; border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: #fafafa; }
+  code { font: 13px ui-monospace, Consolas, monospace; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; margin: 12px 0; break-inside: avoid; }
+  .box.warn { background: #fff7e6; border-color: #f2d28a; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px; font-size: 14px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 600; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 6px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  @media (max-width: 640px) { .cols { grid-template-columns: 1fr; } body { padding: 20px 16px; } }
+  footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media print { body { padding: 0; font-size: 12.5px; } h1 { font-size: 24px; } h2 { font-size: 17px; margin-top: 22px; } a { color: inherit; text-decoration: none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Datawriter <small>By CUAI · Beta 0.5 · 2026年11月2日 · 使用说明</small></h1>
+</header>
+
+<p><b>Datawriter, By CUAI</b> 由 <b>CU Amnesty International（CUAI）</b>（即国际特赦组织的哥伦比亚大学分会）创建，是一款适用于 Chrome 和 Edge 的免费浏览器扩展。输入邮政编码或城镇名称，它会显示
+<b>trackdatacenters.com</b> 上追踪的距您最近的数据中心项目：位于何处、用日常可理解的方式说明其规模、处于哪个
+阶段、由哪些地方、县和州官员决定是否批准建设，并为每位官员准备一封信件，可直接从您自己的
+电子邮件发送。覆盖31个州和哥伦比亚特区（District of Columbia）。</p>
+
+<div class="box warn"><b>测试版软件。</b>Datawriter 为 Beta 0.5 版本。其背后的研究资料于2026年10月从官方政府网站
+收集，随着选举和任命的变化将逐渐过时。在依赖任何姓名之前，请务必
+核对官方网站，并在发送每封信件之前通读全文。</div>
+
+<h2>1. 安装（约一分钟）</h2>
+<ol>
+  <li>解压您收到的文件，会得到一个名为 <code>datawriter</code> 的文件夹。请将其放在固定位置
+    （例如“文档”文件夹）；浏览器从该文件夹加载扩展，因此此后请勿删除或移动它。</li>
+  <li>打开新标签页，访问 <code>chrome://extensions</code>（Edge 中为 <code>edge://extensions</code>）。</li>
+  <li>开启<b>开发者模式</b>（Developer mode）（Chrome 中为右上角的开关，Edge 中位于左下角）。</li>
+  <li>点击<b>加载已解压的扩展程序</b>（Load unpacked），选择 <code>datawriter</code> 文件夹（即包含 <code>manifest.json</code> 的那个文件夹，而不是其外层文件夹）。</li>
+  <li>点击工具栏中的拼图图标，将 <b>Datawriter, By CUAI</b> 固定，使其图标保持可见。</li>
+</ol>
+<p>更新到新版本：将新文件解压到旧文件夹之上以替换其中的文件，然后在扩展页面中点击
+Datawriter 卡片上的重新加载按钮（圆形箭头）。如果新文件夹放在了其他
+位置，请移除旧扩展并再次使用“加载已解压的扩展程序”。如果更新后出现异常，请移除
+扩展并重新加载。</p>
+
+<h2>2. 查找您附近的数据中心</h2>
+<ol>
+  <li>点击 Datawriter 图标，或按 <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>。会打开一个小窗口。</li>
+  <li>输入邮政编码（<code>18503</code>）或城镇名称加州代码（<code>Scranton, PA</code>）。输入四个
+    字母后会出现匹配城镇的列表；选择其中一个或继续输入。在面板中，您也可以
+    按追踪器列出的名称输入项目名称。</li>
+  <li>按下<b>查找</b>（Find）。Datawriter 会在新标签页中打开追踪器上该州的地图，并从侧边
+    滑入其面板。面板首次打开时，一张标题为“三步写成一封信”（Three steps to a letter）的卡片会列出三个步骤；
+    按下<b>知道了</b>（Got it）后它不会再显示。您也可以在 trackdatacenters.com 的任何页面上，通过右下角绿色的<b>最近的数据
+    中心</b>（Nearest data center）按钮打开面板。</li>
+  <li>面板首先显示最近的项目。底部的列表显示最近的六个项目，并有一个按钮可显示更多；点击任何
+    一个即可切换。追踪器的地图会跟随您选择的项目；如果项目位于另一个州，
+    追踪器会切换到该州的地图，您的搜索也随之保留。</li>
+  <li>按下面板标题栏中的全屏按钮（⤢）可获得更宽的视图，再按一次返回
+    侧边栏；按下关闭按钮（×）或 <kbd>Esc</kbd> 可关闭面板。</li>
+</ol>
+
+<p>Datawriter 会跟随浏览器的语言（英语、西班牙语或简体中文）。面板标题栏和工具栏窗口中的语言菜单可以覆盖该设置。致官员的信件始终为英文；信件下方会显示您所用语言的译文，便于您了解所发送的内容。</p>
+
+<h2>3. 阅读面板</h2>
+<h3>阶段颜色</h3>
+<p>每个项目都带有一种代表其阶段的颜色。它出现在状态标签上、标题旁的
+色带上以及“最近”列表的圆点上，并附有一条说明，指出此时写信是否可能产生影响。</p>
+<table>
+  <tr><th>颜色</th><th>阶段</th><th>对您的信件意味着什么</th></tr>
+  <tr><td><span class="dot" style="background:var(--red)"></span>红色</td><td>拟建</td><td>决定尚在前方。此时公众意见最为重要。</td></tr>
+  <tr><td><span class="dot" style="background:var(--amber)"></span>琥珀色</td><td>前期活动</td><td>尚未提交任何申请。请在申请提交之前要求官员制定规则。</td></tr>
+  <tr><td><span class="dot" style="background:var(--purple)"></span>紫色</td><td>延期</td><td>已停滞。公众压力决定其是否重启。</td></tr>
+  <tr><td><span class="dot" style="background:var(--orange)"></span>橙色</td><td>扩建中</td><td>下一阶段需要新的审批。</td></tr>
+  <tr><td><span class="dot" style="background:var(--brown)"></span>棕色</td><td>在建</td><td>区划已经确定。信件转向许可、噪声、用水和税收协议。</td></tr>
+  <tr><td><span class="dot" style="background:var(--ok)"></span>绿色</td><td>运营中</td><td>正在运行。信件对电价、许可和未来阶段仍有作用。</td></tr>
+  <tr><td><span class="dot" style="background:var(--grey)"></span>灰色</td><td>已撤回、已否决或已退役</td><td>没有待决事项。</td></tr>
+</table>
+<p>如果您附近没有被追踪的项目，会有一条说明解释原因。追踪器只记录已公开
+浮现的项目；有些州的项目已在其数据库中但尚无地图页面（截至2026年10月，Iowa 即是如此）；还有少数
+已登记的州在本版本构建时没有任何项目。</p>
+
+<h3>数据一览</h3>
+<p>电力、土地、建筑规模和成本会换算成您可以想象的事物：可供电的家庭数、足球
+场数、整个州的用电天数、每位居民分摊的金额。<b>“本可以”</b>对比卡片显示同样的
+电力、资金、土地或建筑面积本可以换来什么，从教师和医院床位到森林和
+校餐。按下<b>换一个对比</b>（Another comparison）可查看更多。它们显示的是规模，而不是这笔资金
+原本会流向何处。 在追踪器有记录时，还会显示更多卡片：该场址按所在州电网满负荷运行的碳排放、长期岗位与土地和投资的对比，以及从公布到预计投运的年数。下方的“您知道吗？”框每次给出一条有来源的事实。</p>
+
+<h3>谁来决定</h3>
+<p>分为三个层级，并在政府公布的情况下附有官方肖像：</p>
+<ul>
+  <li>市政：议会或委员会、规划委员会、区划委员会和关键工作人员。在大多数州，
+    区划表决在这一层级进行。</li>
+  <li>县（哥伦比亚特区为“特区”）：专员或监事、县规划机构及其负责人，并附有
+    下次选举时间的说明。</li>
+  <li>州：州长、公用事业监管机构、环境和经济部门，每位官员都附有一行说明，解释其为何
+    重要。</li>
+</ul>
+<p><b>从这里开始</b>（Start here）列出对本项目的决定最关键的少数几个人。一条简短提示
+说明在该州由谁掌握区划权力。某一层级下方的警告行表示部分姓名或职务无法在
+官方页面上确认；请查看卡片上链接的网站。</p>
+
+<h2>4. 写信给他们</h2>
+<ol>
+  <li>项目标题下方有一个横条，显示决定最关键的人的头像。按下绿色的
+    <b>写信给决策者</b>（Write to the people who decide）按钮；按钮上会标明人数。下方的每位官员也都有写信或
+    致电按钮，<b>写信给所有人</b>（Write to everyone）则覆盖整个名单。</li>
+  <li>第一次使用时，请输入您的<b>全名</b>：这是必填项，因为办公室会把未署名的信件搁置一旁。您的
+    城镇会根据您搜索的邮政编码自动填入；街道地址、电子邮件和电话为可选项，不过街道地址是
+    证明您住在附近的最简单方式。设置<b>家庭邮政编码</b>（Home ZIP）（在此处或在工具栏窗口中）后，无论您搜索
+    哪个邮政编码，每封信件都会以您所在城镇的居民身份发言。所有这些信息仅保存在您的计算机上。</li>
+  <li>移动<b>语气</b>（Tone）滑块（提问、设定条件或反对）和<b>详略</b>（Detail）滑块（简短、
+    标准或完整）；每个滑块下方的说明文字解释了该档位的作用。如果愿意，可以添加一句关于您自己或您所在街道的话，它会紧接在开头之后插入。
+    致官员的信件均为英文；英文信件下方会显示一份中文译文供您参考。信件只有在您的邮政编码位于该官员的辖区内时才会写“作为您的选民”（as your constituent），否则写“作为
+    邻近城镇……的居民”（as a resident of nearby …）。信件框中的任何内容都可以编辑。</li>
+  <li>选择发送方式：<b>在 Gmail 中打开</b>（Open in Gmail）、<b>在 Outlook 中打开</b>（Open in Outlook）、<b>在 Yahoo Mail 中打开</b>（Open in Yahoo Mail）、<b>在邮件应用中打开</b>（Open in mail app，即您的桌面邮件程序），或
+    <b>复制信件</b>（Copy letter），其旁边还有<b>复制地址</b>（Copy address）和<b>复制主题</b>（Copy subject）。您的邮件程序会打开，并已填入
+    收件人、主题和正文。<b>在您于邮件程序中按下“发送”之前，不会发送任何内容。</b>邮件程序打开后，
+    面板会请您确认已发送；对于长度超出邮件链接所能承载的信件，面板会先复制信件，然后打开只含
+    一行提示的邮件，请将信件粘贴覆盖该提示。如果<b>在邮件应用中打开</b>没有
+    任何反应，说明您的计算机没有默认邮件程序；请使用其中一个网页邮箱按钮或复制信件。</li>
+  <li>只有网页表单的官员会显示<b>在本面板旁边打开联系表单</b>（Open contact form beside this panel），以及用于复制
+    信件和主题的按钮。只有电话的官员会显示30秒通话脚本、语音信箱版本、
+    <b>致电</b>（Call）按钮和<b>打印信件以邮寄</b>（Print the letter to mail），打印的信件上印有该官员的邮寄地址。</li>
+  <li>确认发送后会标记该官员并跳转到下一位；横条会显示“已发送2/4”。如果您通过
+    其他方式发送，请按下<b>标记为已发送</b>（Mark as sent）（此后它显示为<b>已发送（撤销）</b>（Sent (undo)），再按一次可清除标记）；
+    <b>全部标记为已发送</b>（Mark all as sent）覆盖整个列表。您写过信的每个姓名旁都会出现一个勾号。完成后，Datawriter 会为追踪器记录的下一次
+    决定提供日历提醒。</li>
+</ol>
+<div class="box">Datawriter 绝不会自行向任何人发送电子邮件，绝不会发布任何内容，也不会在网上存储任何数据。
+您的信息保存在浏览器的本地存储中，直到您将其清除。它联系的外部服务
+仅有追踪器本身、用于卫星图片的 Esri 公共地图服务，以及用于查询已收录州之外
+邮政编码的公共邮编查询服务（api.zippopotam.us）。</div>
+
+<h2>5. Beta 0.5 的覆盖范围</h2>
+<div class="cols">
+  <div>
+    <p>已完整研究（项目、县、城镇、州领导人）：Pennsylvania、New York、New Jersey、
+    Maryland、North Carolina、Connecticut、Delaware、Maine、Massachusetts、Rhode Island、New Hampshire、
+    Missouri、Ohio、Indiana、Michigan、Iowa、Kentucky、Alabama、Tennessee、West Virginia、Mississippi、
+    North Dakota、Arkansas、South Dakota、Alaska 和 Hawaii。</p>
+  </div>
+  <div>
+    <p>仅有州领导人，等待追踪器收录：District of Columbia、Virginia、Illinois、
+    Georgia、South Carolina 和 Florida 在本版本构建时，追踪器数据库中没有任何项目。
+    在这些地方搜索会显示覆盖州中最近的项目，并予以说明。</p>
+  </div>
+</div>
+<p>Pennsylvania 的乡镇（township）和自治市镇（borough）委员会尚未收录；县和州官员已收录。有些
+委员会只在会议议程中公布名单，因此这些卡片显示办公室的邮箱和电话
+而非姓名。少数官方网站完全阻止自动读取；这些地方有联系
+方式但没有姓名，面板会予以说明。</p>
+
+<h2>6. 出现问题时</h2>
+<table>
+  <tr><th>您看到的情况</th><th>处理方法</th></tr>
+  <tr><td>面板按钮未出现在 trackdatacenters.com 上</td><td>重新加载页面。如果仍未出现，请打开扩展页面，点击 Datawriter 的重新加载按钮（圆形箭头），然后重新加载追踪器页面。</td></tr>
+  <tr><td>“无法连接扩展的后台脚本”</td><td>在扩展页面中移除 Datawriter，然后重新加载该文件夹（浏览器有时会在更新后丢失“scripting”权限）。</td></tr>
+  <tr><td>地图没有移动到项目位置</td><td>追踪器的地图只包含您所在州页面的项目。Datawriter 会为您切换页面；如果失败，请从追踪器的菜单中打开该州，然后重新搜索。Iowa 尚无地图页面。</td></tr>
+  <tr><td>“您附近没有被追踪的项目”</td><td>请阅读标题下方的说明：它会指出追踪器是不覆盖您所在的州、没有该州的页面，还是只是40英里范围内没有项目。最近的项目仍会显示。</td></tr>
+  <tr><td>已收录州之外的邮政编码</td><td>Datawriter 会在线查询该邮政编码，并仍然找到最近的已覆盖项目。</td></tr>
+  <tr><td>某个姓名似乎已过时</td><td>点击该卡片上的<b>网站 ↗</b>（website ↗）核对官方页面，并告知 CU Amnesty International，以便在下一版本中修正。</td></tr>
+  <tr><td>信件在错误的邮件程序中打开</td><td>使用<b>复制信件</b>，粘贴到您想用的地方。Gmail 用户：选择 <b>Gmail</b>，它会在浏览器中打开撰写窗口。</td></tr>
+</table>
+
+<h2>7. 版本</h2>
+<p>本版本为 <b>Datawriter, By CUAI, Beta 0.5</b>（构建版本 0.5.0，2026年11月2日）。Beta 0.1（10月23日）是首个
+发布版本；0.1.1 按州收录了官员和肖像；Beta 0.2 重新设计了写信流程，随后简化了
+界面（0.2.2），并将信件恢复为分会模板的措辞（0.2.3）；Beta 0.5 增加了语气和
+详略滑块、发送确认、家庭邮政编码和项目名称搜索。此后的版本沿用
+同一编号方案，并谨慎推进：小修复和数据更新递增最后一位数字；新增州或新的面板
+功能递增中间一位；首个非测试版将是 Datawriter 1.0。版本号显示在
+扩展页面中扩展的卡片上。 Beta 0.5 增加了西班牙语和简体中文。 Beta 0.5 增加了碳排放、岗位和时间线数据以及“您知道吗？”框，并在追踪器没有记录数据时不再在信件中提及用水。</p>
+
+<footer>
+  Datawriter, By CUAI · 由 CU Amnesty International（CUAI）创建，即国际特赦组织的哥伦比亚大学分会 · Beta 0.5 · 数据来自 trackdatacenters.com 和官方政府网站，于
+  2026年10月收集 · 卫星影像 © Esri, Maxar, Earthstar Geographics · 数据来自 EIA、美国人口普查局（Census Bureau）、
+  NEA、USDA 和 NCES（来源列于文件夹内的 README）。
+</footer>
+</body>
+</html>

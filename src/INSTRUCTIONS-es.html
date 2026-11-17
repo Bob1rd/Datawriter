@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datawriter, By CUAI: Instrucciones (Beta 0.5)</title>
+<style>
+  :root { --green: #2f5a33; --ink: #162016; --muted: #56625a; --line: #dde4dd; --soft: #f3f6f3; --red: #c62828; --amber: #e0a100; --purple: #7b3fa0; --orange: #e8730c; --brown: #7a5230; --ok: #2e7d32; --grey: #8a8f8a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 24px 48px; max-width: 820px; margin-inline: auto; font: 15px/1.5 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: #fff; }
+  header { border-bottom: 3px solid var(--green); padding-bottom: 14px; margin-bottom: 24px; }
+  h1 { margin: 0; font-size: 30px; color: var(--green); letter-spacing: -0.3px; }
+  h1 small { display: block; font-size: 15px; font-weight: 500; color: var(--muted); margin-top: 4px; }
+  h2 { font-size: 20px; color: var(--green); margin: 30px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 4px; break-after: avoid; }
+  h3 { font-size: 16px; margin: 18px 0 6px; break-after: avoid; }
+  p, li { margin: 0 0 8px; }
+  ol, ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  kbd { font: 12px/1 ui-monospace, Consolas, monospace; border: 1px solid #bbb; border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: #fafafa; }
+  code { font: 13px ui-monospace, Consolas, monospace; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; margin: 12px 0; break-inside: avoid; }
+  .box.warn { background: #fff7e6; border-color: #f2d28a; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px; font-size: 14px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 600; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 6px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  @media (max-width: 640px) { .cols { grid-template-columns: 1fr; } body { padding: 20px 16px; } }
+  footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media print { body { padding: 0; font-size: 12.5px; } h1 { font-size: 24px; } h2 { font-size: 17px; margin-top: 22px; } a { color: inherit; text-decoration: none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Datawriter <small>By CUAI · Beta 0.5 · 2 de noviembre de 2026 · Instrucciones</small></h1>
+</header>
+
+<p><b>Datawriter, By CUAI</b>, creada por <b>CU Amnesty International (CUAI)</b>, el capítulo de Amnistía Internacional en la Universidad de Columbia, es una extensión gratuita para los navegadores Chrome y Edge. Escriba un código ZIP o una localidad y le mostrará el proyecto de centro
+de datos más cercano registrado en <b>trackdatacenters.com</b>: dónde está, qué tan grande es en términos cotidianos, en qué
+etapa se encuentra, los funcionarios locales, del condado y del estado que deciden si se construye, y una carta para cada
+uno de ellos, lista para enviar desde su propio correo electrónico. Cubre 31 estados y el Distrito de Columbia.</p>
+
+<div class="box warn"><b>Software en fase beta.</b> Datawriter es una versión Beta 0.5. La investigación en la que se basa se recopiló
+de sitios web oficiales de los gobiernos en octubre de 2026 y quedará desactualizada a medida que las elecciones y los nombramientos cambien. Verifique siempre
+el sitio web oficial antes de confiar en un nombre, y lea cada carta antes de enviarla.</div>
+
+<h2>1. Instalación (alrededor de un minuto)</h2>
+<ol>
+  <li>Descomprima el archivo que recibió. Obtendrá una carpeta llamada <code>datawriter</code>. Guárdela en un lugar permanente
+    (Documentos, por ejemplo); el navegador carga la extensión desde esa carpeta, así que no la elimine ni la mueva después.</li>
+  <li>Abra una pestaña nueva y vaya a <code>chrome://extensions</code> (en Edge: <code>edge://extensions</code>).</li>
+  <li>Active el <b>Modo de desarrollador</b> (Developer mode), un interruptor en la parte superior derecha en Chrome y en la parte inferior izquierda en Edge.</li>
+  <li>Haga clic en <b>Cargar descomprimida</b> (Load unpacked) y elija la carpeta <code>datawriter</code> (la que contiene <code>manifest.json</code>, no la carpeta que la rodea).</li>
+  <li>Haga clic en el icono de la pieza de rompecabezas en la barra de herramientas y fije <b>Datawriter, By CUAI</b> para que su icono quede siempre visible.</li>
+</ol>
+<p>Para actualizar a una versión más reciente: descomprima el archivo nuevo sobre la carpeta antigua de modo que sus archivos se reemplacen, y luego haga clic en el
+botón de recarga (la flecha circular) en la tarjeta de Datawriter en la página de extensiones. Si colocó la carpeta nueva en otro
+lugar, quite la extensión antigua y use de nuevo Cargar descomprimida. Si algo se ve mal después de una actualización, quite la
+extensión y cárguela de nuevo.</p>
+
+<h2>2. Encuentre el centro de datos cercano a usted</h2>
+<ol>
+  <li>Haga clic en el icono de Datawriter, o presione <kbd>Alt</kbd> + <kbd>Mayús</kbd> + <kbd>D</kbd>. Se abre una ventana pequeña.</li>
+  <li>Escriba un código ZIP (<code>18503</code>) o una localidad con su estado (<code>Scranton, PA</code>). Después de cuatro
+    letras aparece una lista de localidades coincidentes; elija una o siga escribiendo. En el panel también puede escribir el
+    nombre de un proyecto tal como lo enumera el rastreador.</li>
+  <li>Presione <b>Buscar</b> (Find). Datawriter abre una pestaña nueva con el mapa del rastreador para ese estado y desliza su panel
+    desde el costado. La primera vez que se abre el panel, una tarjeta titulada "Tres pasos hasta una carta" enumera los tres pasos;
+    presione <b>Entendido</b> (Got it) y no volverá a aparecer. También puede abrir el panel desde cualquier página de trackdatacenters.com con el botón verde <b>Centro de datos
+    más cercano</b> (Nearest data center) en la parte inferior derecha.</li>
+  <li>El panel muestra primero el proyecto más cercano. La lista de abajo muestra los seis más cercanos, con un botón para ver más; haga clic en cualquiera de
+    ellos para cambiar. El mapa del rastreador sigue al proyecto que usted elija; si el proyecto está en otro estado, el
+    rastreador cambia al mapa de ese estado y su búsqueda lo acompaña.</li>
+  <li>Presione el botón de pantalla completa (⤢) en el encabezado del panel para una vista más amplia, presiónelo de nuevo para volver a la
+    barra lateral, y presione el botón de cerrar (×) o <kbd>Esc</kbd> para cerrar el panel.</li>
+</ol>
+
+<p>Datawriter sigue el idioma de su navegador (inglés, español o chino simplificado). Un menú de idioma en el encabezado del panel y en la ventana de la barra de herramientas permite cambiarlo. Las cartas a los funcionarios se envían siempre en inglés; debajo de la carta aparece una copia en su idioma para que sepa qué está enviando.</p>
+
+<h2>3. Cómo leer el panel</h2>
+<h3>El color de la etapa</h3>
+<p>Cada proyecto lleva un color según su etapa. Aparece en la etiqueta de estado, en la banda junto al
+título y en los puntos de la lista de "más cercanos", con una nota sobre si es probable que una carta marque una diferencia.</p>
+<table>
+  <tr><th>Color</th><th>Etapa</th><th>Qué significa para su carta</th></tr>
+  <tr><td><span class="dot" style="background:var(--red)"></span>Rojo</td><td>Propuesto</td><td>Todavía hay una decisión por delante. Los comentarios públicos cuentan más ahora.</td></tr>
+  <tr><td><span class="dot" style="background:var(--amber)"></span>Ámbar</td><td>Actividad preliminar</td><td>Todavía no se ha presentado nada. Pida a sus funcionarios reglas antes de que llegue una solicitud.</td></tr>
+  <tr><td><span class="dot" style="background:var(--purple)"></span>Morado</td><td>Retrasado</td><td>Estancado. La presión decide si regresa.</td></tr>
+  <tr><td><span class="dot" style="background:var(--orange)"></span>Naranja</td><td>En expansión</td><td>Se necesitan nuevas aprobaciones para la siguiente fase.</td></tr>
+  <tr><td><span class="dot" style="background:var(--brown)"></span>Marrón</td><td>En construcción</td><td>La zonificación está resuelta. Las cartas pasan a los permisos, el ruido, el agua y los acuerdos fiscales.</td></tr>
+  <tr><td><span class="dot" style="background:var(--ok)"></span>Verde</td><td>Activo</td><td>En funcionamiento. Las cartas importan para las tarifas, los permisos y las fases futuras.</td></tr>
+  <tr><td><span class="dot" style="background:var(--grey)"></span>Gris</td><td>Retirado, rechazado o clausurado</td><td>No hay nada pendiente.</td></tr>
+</table>
+<p>Si no hay nada registrado cerca de usted, una nota explica por qué. El rastreador solo registra proyectos que han salido a la luz
+pública; algunos estados tienen proyectos en su base de datos pero todavía no tienen página de mapa (Iowa, en octubre de 2026); y unos pocos
+estados registrados no tenían ningún proyecto cuando se compiló esta versión.</p>
+
+<h3>En cifras</h3>
+<p>La energía, el terreno, el tamaño de los edificios y el costo se traducen a cosas que usted puede imaginar: hogares alimentados, campos de
+fútbol americano, días de electricidad de todo un estado, dólares por residente. Las tarjetas <b>"…podría en cambio"</b> muestran lo que
+la misma electricidad, dinero, terreno o superficie construida podría comprar, desde maestros y camas de hospital hasta bosques y
+almuerzos escolares. Presione <b>Otra comparación</b> (Another comparison) para ver más. Muestran la escala, no a dónde iría el dinero
+de otro modo. Cuando el rastreador los registra, otras tarjetas muestran el carbono que el sitio emitiría a plena carga con la red del estado, los empleos permanentes frente al terreno y la inversión, y los años desde el anuncio hasta la apertura prevista. Debajo, un recuadro "¿Sabía que?" ofrece un dato documentado a la vez.</p>
+
+<h3>Quién decide</h3>
+<p>Tres niveles, con retratos oficiales cuando el gobierno los publica:</p>
+<ul>
+  <li>Municipio: concejo o junta, comisión de planificación, junta de zonificación y personal clave. En la mayoría de los estados es
+    aquí donde se produce la votación de zonificación.</li>
+  <li>Condado (Distrito, en el caso de DC): comisionados o supervisores, el órgano de planificación del condado y su director, con una
+    nota sobre cuándo es la próxima elección.</li>
+  <li>Estado: gobernador, reguladores de servicios públicos, agencias ambientales y económicas, cada uno con una línea sobre por qué
+    importa.</li>
+</ul>
+<p><b>Empiece aquí</b> (Start here) enumera al puñado de personas cuya decisión más importa para este proyecto. Un consejo breve
+explica quién tiene el poder de zonificación en ese estado. Una línea de advertencia bajo un nivel significa que algunos nombres o cargos no pudieron
+confirmarse en una página oficial; verifique el sitio web enlazado en la tarjeta.</p>
+
+<h2>4. Escríbales</h2>
+<ol>
+  <li>Bajo el título del proyecto, una barra muestra los rostros de las personas cuya decisión más importa. Presione el botón verde
+    <b>Escribir a las personas que deciden</b> (Write to the people who decide); indica cuántas son. Cada funcionario más abajo también tiene un botón para escribir o
+    llamar, y <b>Escribir a todos</b> (Write to everyone) cubre la lista completa.</li>
+  <li>La primera vez, escriba su <b>nombre</b>: es obligatorio, porque las oficinas dejan de lado las cartas sin firma. Su
+    localidad se completa a partir del ZIP que buscó; la dirección, el correo electrónico y el teléfono son opcionales, aunque una dirección es
+    la forma más sencilla de demostrar que vive cerca. Un <b>ZIP de residencia</b> (Home ZIP, aquí o en la ventana de la barra de herramientas) hace que cada carta
+    hable como residente de su propia localidad, sea cual sea el ZIP que busque. Todo esto se guarda únicamente en su computadora.</li>
+  <li>Mueva el control deslizante <b>Tono</b> (Tone), con las posiciones Preguntar, Condicionar u Oponerse, y el control deslizante <b>Detalle</b> (Detail), con las posiciones Breve,
+    Estándar o Completa; la leyenda bajo cada uno indica qué hace esa posición. Si lo desea, añada una línea sobre usted o su calle; se inserta justo después del saludo inicial.
+    Las cartas a los funcionarios están redactadas en inglés, que es el idioma en que las oficinas las leen; debajo de la carta en inglés se muestra una copia traducida para que usted sepa exactamente qué dice.
+    La carta dice "as your constituent" (como su elector) solo cuando su ZIP está dentro de la jurisdicción de ese funcionario, y "as a
+    resident of nearby …" (como residente de las cercanías de …) en los demás casos. Edite lo que quiera en el cuadro de la carta.</li>
+  <li>Elija cómo enviarla: <b>Abrir en Gmail</b> (Open in Gmail), <b>Abrir en Outlook</b> (Open in Outlook), <b>Abrir en Yahoo Mail</b> (Open in Yahoo Mail), <b>Abrir en la aplicación de correo</b> (Open in mail app, su programa de correo de escritorio), o
+    <b>Copiar carta</b> (Copy letter, con <b>Copiar dirección</b> y <b>Copiar asunto</b> a su lado). Su programa de correo se abre con
+    el destinatario, el asunto y el texto ya completados. <b>No se envía nada hasta que usted presione Enviar allí.</b> Una vez que se ha abierto,
+    el panel le pide confirmar el envío; una carta demasiado larga para un enlace de correo se copia primero y el mensaje se abre
+    con una nota de una línea sobre la que debe pegar. Si <b>Abrir en la aplicación de correo</b> no hace
+    nada, su computadora no tiene un programa de correo predeterminado; use uno de los botones de correo web o copie la carta.</li>
+  <li>Los funcionarios que solo tienen un formulario web reciben <b>Abrir el formulario de contacto junto a este panel</b> (Open contact form beside this panel) además de botones para copiar la
+    carta y el asunto. Los funcionarios que solo tienen teléfono reciben un guion de llamada de 30 segundos, una versión para el buzón de voz, un
+    botón <b>Llamar</b> (Call) e <b>Imprimir la carta para enviarla por correo postal</b> (Print the letter to mail), con la dirección postal del funcionario impresa en la carta.</li>
+  <li>Confirmar un envío marca a esa persona y lo lleva a la siguiente; la barra muestra "2 de 4 enviadas". Si envió por
+    otros medios, presione <b>Marcar como enviada</b> (Mark as sent; después se lee <b>Enviada (deshacer)</b>, y presionarlo de nuevo quita la marca);
+    <b>Marcar todo como enviado</b> (Mark all as sent) cubre la lista completa. Aparece una marca de verificación junto a cada nombre al que haya escrito. Cuando termine, Datawriter le ofrece un recordatorio de calendario para la próxima
+    decisión que registra el rastreador.</li>
+</ol>
+<div class="box">Datawriter nunca envía correos por sí sola, nunca publica nada y no almacena nada en línea.
+Sus datos permanecen en el almacenamiento local de su navegador hasta que usted los borre. Los únicos servicios externos con los que se
+comunica son el propio rastreador, el servicio público de mapas de Esri para las imágenes satelitales y una consulta pública de códigos
+ZIP (api.zippopotam.us) para los ZIP fuera de los estados incluidos.</div>
+
+<h2>5. Cobertura en Beta 0.5</h2>
+<div class="cols">
+  <div>
+    <p>Investigación completa (proyectos, condados, localidades, líderes estatales): Pennsylvania, New York, New Jersey,
+    Maryland, North Carolina, Connecticut, Delaware, Maine, Massachusetts, Rhode Island, New Hampshire,
+    Missouri, Ohio, Indiana, Michigan, Iowa, Kentucky, Alabama, Tennessee, West Virginia, Mississippi,
+    North Dakota, Arkansas, South Dakota, Alaska y Hawaii.</p>
+  </div>
+  <div>
+    <p>Solo líderes estatales, a la espera del rastreador: el Distrito de Columbia, Virginia, Illinois,
+    Georgia, South Carolina y Florida no tenían proyectos en la base de datos del rastreador cuando se compiló esta versión.
+    Las búsquedas allí muestran el proyecto más cercano en un estado cubierto y lo indican.</p>
+  </div>
+</div>
+<p>Las juntas de los townships y boroughs de Pennsylvania todavía no están incluidas; los funcionarios del condado y del estado sí. Algunas
+juntas publican sus listas de miembros solo dentro de las agendas de reuniones, así que esas tarjetas muestran el buzón y el teléfono de la oficina
+en lugar de nombres. Unos pocos sitios web oficiales bloquean por completo la lectura automatizada; esos lugares tienen datos de contacto
+pero no nombres, y el panel lo indica.</p>
+
+<h2>6. Si algo sale mal</h2>
+<table>
+  <tr><th>Lo que ve</th><th>Qué hacer</th></tr>
+  <tr><td>El botón del panel no aparece en trackdatacenters.com</td><td>Recargue la página. Si sigue sin aparecer, abra la página de extensiones y haga clic en el botón de recarga de Datawriter (la flecha circular), y luego recargue la página del rastreador.</td></tr>
+  <tr><td>"No se pudo contactar con el script en segundo plano de la extensión"</td><td>Quite Datawriter desde la página de extensiones y cargue la carpeta de nuevo (el navegador a veces pierde el permiso "scripting" después de una actualización).</td></tr>
+  <tr><td>El mapa no se mueve al proyecto</td><td>El mapa del rastreador solo contiene los proyectos de la página del estado en la que usted se encuentra. Datawriter cambia de página por usted; si eso falla, abra el estado desde el menú del rastreador y busque de nuevo. Iowa todavía no tiene página de mapa.</td></tr>
+  <tr><td>"Nada rastreado cerca de usted"</td><td>Lea la nota bajo el título: indica si el rastreador no incluye su estado, no tiene página para él, o simplemente no tiene ningún proyecto a menos de 40 millas. El proyecto más cercano se muestra de todos modos.</td></tr>
+  <tr><td>Un ZIP fuera de los estados incluidos</td><td>Datawriter consulta el ZIP en línea y aun así encuentra el proyecto cubierto más cercano.</td></tr>
+  <tr><td>Un nombre parece desactualizado</td><td>Haga clic en <b>sitio web ↗</b> en esa tarjeta para verificar la página oficial, y avise a CU Amnesty International para que la próxima versión pueda corregirlo.</td></tr>
+  <tr><td>Una carta se abre en el programa de correo equivocado</td><td>Use <b>Copiar carta</b> y péguela donde prefiera. Usuarios de Gmail: elijan <b>Gmail</b>, que abre una ventana de redacción en el navegador.</td></tr>
+</table>
+
+<h2>7. Versiones</h2>
+<p>Esta es <b>Datawriter, By CUAI, Beta 0.5</b> (compilación 0.5.0, 2 de noviembre de 2026). Beta 0.1 (23 de octubre) fue la primera
+versión; 0.1.1 incluyó funcionarios y retratos por estado; Beta 0.2 rehízo el flujo de las cartas, luego simplificó la
+interfaz (0.2.2) y devolvió las cartas a la redacción de la plantilla del capítulo (0.2.3); Beta 0.5 añadió los controles deslizantes de tono y
+detalle, la confirmación de envíos, el ZIP de residencia y la búsqueda por nombre de proyecto. Las versiones posteriores mantienen
+el mismo esquema y avanzan despacio: las correcciones pequeñas y las actualizaciones de datos aumentan el último número; los estados nuevos o las nuevas funciones del panel
+aumentan el del medio; la primera versión fuera de beta será Datawriter 1.0. La versión se muestra en la
+tarjeta de la extensión en la página de extensiones. Beta 0.5 añadió el español y el chino simplificado. Beta 0.5 añadió las cifras de carbono, empleos y plazos y el recuadro "¿Sabía que?", y retiró el agua de las cartas salvo cuando el rastreador registra una cifra.</p>
+
+<footer>
+  Datawriter, By CUAI · creada por CU Amnesty International (CUAI), el capítulo de Amnistía Internacional en la Universidad de Columbia · Beta 0.5 · Datos de trackdatacenters.com y de sitios web oficiales de los gobiernos, recopilados en
+  octubre de 2026 · Imágenes satelitales © Esri, Maxar, Earthstar Geographics · Cifras de EIA, la Oficina del Censo,
+  NEA, USDA y NCES (las fuentes se enumeran en el README dentro de la carpeta).
+</footer>
+</body>
+</html>

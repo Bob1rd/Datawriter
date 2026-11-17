@@ -1,0 +1,14 @@
+{
+    "manifest_name":  {
+                          "message":  "Datawriter, By CUAI"
+                      },
+    "manifest_description":  {
+                                 "message":  "Escriba un ZIP: el centro de datos rastreado más cercano, quién decide y una carta lista para enviar. De CU Amnesty International."
+                             },
+    "manifest_action_title":  {
+                                  "message":  "Buscar el centro de datos más cercano"
+                              },
+    "manifest_command_open":  {
+                                  "message":  "Abrir Datawriter"
+                              }
+}

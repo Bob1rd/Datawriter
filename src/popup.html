@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title data-i18n="popup_html.title">Datawriter, By CUAI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="icons/icon-48.png" alt="" width="32" height="32">
+    <div>
+      <div class="t"><span data-i18n="popup_html.brand">Datawriter</span> <span class="by" id="by" data-i18n="popup_html.by">By CUAI</span></div>
+      <div class="s" id="states"></div>
+    </div>
+  </header>
+  <form id="f" novalidate>
+    <label for="zip" data-i18n="popup_html.zip_label">Your ZIP code or town</label>
+    <div class="row">
+      <input id="zip" type="text" autocomplete="off" maxlength="48" placeholder="18503 or Scranton, PA" data-i18n-placeholder="popup_html.zip_placeholder" autofocus aria-describedby="hint" role="combobox" aria-autocomplete="list" aria-expanded="false">
+      <button type="submit" data-i18n="popup_html.find">Find</button>
+      <ul id="sug" class="sug" role="listbox" hidden></ul>
+    </div>
+    <div id="hint" class="hint" aria-live="polite"></div>
+  </form>
+  <div id="recent" class="recent" hidden>
+    <div class="lbl" data-i18n="popup_html.recent">Recent</div>
+    <div class="chips"></div>
+  </div>
+  <form id="home" class="home" novalidate>
+    <label for="homezip" data-i18n="popup_html.home_label">Home ZIP (optional)</label>
+    <div class="row">
+      <input id="homezip" type="text" inputmode="numeric" maxlength="5" placeholder="Where you live" data-i18n-placeholder="popup_html.home_placeholder" aria-describedby="homehint">
+      <button type="submit" data-i18n="popup_html.save">Save</button>
+    </div>
+    <div id="homehint" class="hint" data-i18n="popup_html.home_hint">Letters then sign from your own town and say "as your constituent" only to your own officials, whatever ZIP you search.</div>
+  </form>
+  <footer>
+    <span data-i18n="popup_html.footer">Results open in a <b data-i18n-slot="site">trackdatacenters.com</b> tab, which comes to the front. The panel sits beside its map: satellite view, size, cost and the officials who decide.</span>
+    <div class="kbd"><span data-i18n="popup_html.shortcut">Shortcut: <span data-i18n-slot="keys"><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd></span> · </span><a href="about.html" target="_blank" rel="noopener" data-i18n="popup_html.about_link">About Datawriter</a></div>
+  </footer>
+  <script src="i18n.js"></script>
+  <script src="states.js"></script>
+  <script src="finder.js"></script>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

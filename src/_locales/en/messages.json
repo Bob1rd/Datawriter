@@ -1,0 +1,14 @@
+{
+    "manifest_name":  {
+                          "message":  "Datawriter, By CUAI"
+                      },
+    "manifest_description":  {
+                                 "message":  "Type a ZIP code: the nearest tracked data center, the officials who decide, and a letter ready to send. By CU Amnesty International."
+                             },
+    "manifest_action_title":  {
+                                  "message":  "Find the nearest data center"
+                              },
+    "manifest_command_open":  {
+                                  "message":  "Open Datawriter"
+                              }
+}

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datawriter, By CUAI: Instructions (Beta 0.5)</title>
+<style>
+  :root { --green: #2f5a33; --ink: #162016; --muted: #56625a; --line: #dde4dd; --soft: #f3f6f3; --red: #c62828; --amber: #e0a100; --purple: #7b3fa0; --orange: #e8730c; --brown: #7a5230; --ok: #2e7d32; --grey: #8a8f8a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 32px 24px 48px; max-width: 820px; margin-inline: auto; font: 15px/1.5 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: #fff; }
+  header { border-bottom: 3px solid var(--green); padding-bottom: 14px; margin-bottom: 24px; }
+  h1 { margin: 0; font-size: 30px; color: var(--green); letter-spacing: -0.3px; }
+  h1 small { display: block; font-size: 15px; font-weight: 500; color: var(--muted); margin-top: 4px; }
+  h2 { font-size: 20px; color: var(--green); margin: 30px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 4px; break-after: avoid; }
+  h3 { font-size: 16px; margin: 18px 0 6px; break-after: avoid; }
+  p, li { margin: 0 0 8px; }
+  ol, ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  kbd { font: 12px/1 ui-monospace, Consolas, monospace; border: 1px solid #bbb; border-bottom-width: 2px; border-radius: 4px; padding: 2px 6px; background: #fafafa; }
+  code { font: 13px ui-monospace, Consolas, monospace; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; margin: 12px 0; break-inside: avoid; }
+  .box.warn { background: #fff7e6; border-color: #f2d28a; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px; font-size: 14px; break-inside: avoid; }
+  th, td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 600; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin-right: 6px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  @media (max-width: 640px) { .cols { grid-template-columns: 1fr; } body { padding: 20px 16px; } }
+  footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media print { body { padding: 0; font-size: 12.5px; } h1 { font-size: 24px; } h2 { font-size: 17px; margin-top: 22px; } a { color: inherit; text-decoration: none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Datawriter <small>By CUAI · Beta 0.5 · November 2, 2026 · Instructions</small></h1>
+</header>
+
+<p><b>Datawriter, By CUAI</b>, created by <b>CU Amnesty International (CUAI)</b>, the Columbia University chapter of Amnesty International, is a free browser extension for Chrome and Edge. Type a ZIP code or a town and it shows you the nearest
+data center project tracked on <b>trackdatacenters.com</b>: where it is, how big it is in everyday terms, what
+stage it is at, the local, county and state officials who decide whether it gets built, and a letter to each
+of them, ready to send from your own email. It covers 31 states and the District of Columbia.</p>
+
+<div class="box warn"><b>Beta software.</b> Datawriter is a Beta 0.5 release. The research behind it was collected
+from official government websites in October 2026 and will go stale as elections and appointments change. Always
+check the official website before relying on a name, and read every letter before you send it.</div>
+
+<h2>1. Install (about one minute)</h2>
+<ol>
+  <li>Unzip the file you received. You get a folder called <code>datawriter</code>. Keep it somewhere permanent
+    (Documents, for example); the browser loads the extension from that folder, so do not delete or move it later.</li>
+  <li>Open a new tab and go to <code>chrome://extensions</code> (in Edge: <code>edge://extensions</code>).</li>
+  <li>Turn on <b>Developer mode</b> (a switch at the top right in Chrome, bottom left in Edge).</li>
+  <li>Click <b>Load unpacked</b> and choose the <code>datawriter</code> folder (the one that contains <code>manifest.json</code>, not the folder around it).</li>
+  <li>Click the puzzle-piece icon in the toolbar and pin <b>Datawriter, By CUAI</b> so its icon stays visible.</li>
+</ol>
+<p>Updating to a newer version: unzip the new file over the old folder so its files are replaced, then click the
+reload button (the circular arrow) on Datawriter's card in the extensions page. If you put the new folder somewhere
+else, remove the old extension and use Load unpacked again. If something looks off after an update, remove the
+extension and load it again.</p>
+
+<h2>2. Find the data center near you</h2>
+<ol>
+  <li>Click the Datawriter icon, or press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>. A small window opens.</li>
+  <li>Type a ZIP code (<code>18503</code>) or a town with its state (<code>Scranton, PA</code>). After four
+    letters a list of matching towns appears; pick one or keep typing. In the panel you can also type a
+    project's name as the tracker lists it.</li>
+  <li>Press <b>Find</b>. Datawriter opens a new tab with the tracker's map for that state and slides its panel in
+    from the side. The first time the panel opens, a card headed "Three steps to a letter" lists the three steps;
+    press <b>Got it</b> and it does not show again. You can also open the panel from any trackdatacenters.com page with the green <b>Nearest data
+    center</b> button at the bottom right.</li>
+  <li>The panel shows the closest project first. The list at the bottom shows the six closest, with a button for more; click any of
+    them to switch. The tracker's map follows the project you choose; if the project is in another state the
+    tracker switches to that state's map and your search comes along.</li>
+  <li>Press the full-screen button (⤢) in the panel header for a wider view, press it again to return to the
+    sidebar, and press the close button (×) or <kbd>Esc</kbd> to close the panel.</li>
+</ol>
+
+<p>Datawriter follows your browser's language (English, Spanish or Simplified Chinese). A language menu in the panel header and in the toolbar window overrides it. Letters to officials are always in English; a copy in your language appears under the letter so you know what you are sending.</p>
+
+<h2>3. Read the panel</h2>
+<h3>The stage color</h3>
+<p>Every project carries one color for its stage. It appears on the status chip, in the band beside the
+title and on the dots in the "closest" list, with a note on whether a letter is likely to make a difference.</p>
+<table>
+  <tr><th>Color</th><th>Stage</th><th>What it means for your letter</th></tr>
+  <tr><td><span class="dot" style="background:var(--red)"></span>Red</td><td>Proposed</td><td>A decision is still ahead. Public comment counts most now.</td></tr>
+  <tr><td><span class="dot" style="background:var(--amber)"></span>Amber</td><td>Preliminary activity</td><td>Nothing filed yet. Ask your officials for rules before an application lands.</td></tr>
+  <tr><td><span class="dot" style="background:var(--purple)"></span>Purple</td><td>Delayed</td><td>Stalled. Pressure decides whether it comes back.</td></tr>
+  <tr><td><span class="dot" style="background:var(--orange)"></span>Orange</td><td>Expanding</td><td>New approvals are needed for the next phase.</td></tr>
+  <tr><td><span class="dot" style="background:var(--brown)"></span>Brown</td><td>Under construction</td><td>Zoning is settled. Letters shift to permits, noise, water and tax deals.</td></tr>
+  <tr><td><span class="dot" style="background:var(--ok)"></span>Green</td><td>Active</td><td>Running. Letters matter for rates, permits and future phases.</td></tr>
+  <tr><td><span class="dot" style="background:var(--grey)"></span>Grey</td><td>Withdrawn, rejected or retired</td><td>Nothing is pending.</td></tr>
+</table>
+<p>If nothing is tracked near you, a note explains why. The tracker only records projects that have surfaced
+publicly; some states have projects in its database but no map page yet (Iowa, in October 2026); and a few
+registered states had no projects at all when this version was built.</p>
+
+<h3>By the numbers</h3>
+<p>Power, land, building size and cost are translated into things you can picture: homes powered, football
+fields, days of a whole state's electricity, dollars per resident. The <b>"…could instead"</b> cards show what
+the same electricity, money, land or floor space would buy, from teachers and hospital beds to forests and
+school lunches. Press <b>Another comparison</b> for more. They show scale, not where the money would
+otherwise go. Where the tracker records them, further cards show the carbon the site would emit at full load on the state's grid, the permanent jobs set against the land and the investment, and the years from announcement to planned opening. A "Did you know?" box beneath gives one sourced fact at a time.</p>
+
+<h3>Who decides</h3>
+<p>Three tiers, with official portraits where the government publishes them:</p>
+<ul>
+  <li>Municipality: council or board, planning commission, zoning board and key staff. In most states this is
+    where the zoning vote happens.</li>
+  <li>County (District, for DC): commissioners or supervisors, the county planning body and its director, with a
+    note on when the next election is.</li>
+  <li>State: governor, utility regulators, environmental and economic agencies, each with a line on why they
+    matter.</li>
+</ul>
+<p><b>Start here</b> lists the handful of people whose decision matters most for this project. A short tip
+explains who holds the zoning power in that state. A warning line under a tier means some names or titles could not be
+confirmed on an official page; check the website linked on the card.</p>
+
+<h2>4. Write to them</h2>
+<ol>
+  <li>Under the project title a bar shows the faces of the people whose decision matters most. Press the green
+    <b>Write to the people who decide</b> button; it says how many. Every official further down also has a write or
+    call button, and <b>Write to everyone</b> covers the whole roster.</li>
+  <li>The first time, type your <b>name</b>: it is required, because offices set unsigned letters aside. Your
+    town is filled in from the ZIP you searched; street, email and phone are optional, though a street address is
+    the easiest way to show you live nearby. A <b>Home ZIP</b> (here or in the toolbar window) makes every letter
+    speak as a resident of your own town, whatever ZIP you search. All of this is saved on your computer only.</li>
+  <li>Move the <b>Tone</b> slider (Ask questions, Set conditions or Oppose) and the <b>Detail</b> slider (Brief,
+    Standard or Full); the caption under each says what the stop does. Add one line about yourself or your street if you like; it goes in right after the opening.
+    The letter says "as your constituent" only when your ZIP is inside that official's jurisdiction, and "as a
+    resident of nearby …" otherwise. Edit anything in the letter box.</li>
+  <li>Choose how to send it: <b>Open in Gmail</b>, <b>Open in Outlook</b>, <b>Open in Yahoo Mail</b>, <b>Open in mail app</b> (your desktop mail program), or
+    <b>Copy letter</b> (with <b>Copy address</b> and <b>Copy subject</b> beside it). Your mail program opens with
+    the recipient, subject and text filled in. <b>Nothing is sent until you press Send there.</b> Once it has opened,
+    the panel asks you to confirm the send; a letter too long for a mail link is copied first and the message opens
+    with a one-line note to paste over. If <b>Open in mail app</b> does
+    nothing, your computer has no default mail program; use one of the webmail buttons or copy the letter.</li>
+  <li>Officials with only a web form get <b>Open contact form beside this panel</b> plus copy buttons for the
+    letter and subject. Officials with only a phone get a 30-second call script, a voicemail version, a
+    <b>Call</b> button and <b>Print the letter to mail</b>, with the official's mailing address printed on the letter.</li>
+  <li>Confirming a send marks that person and moves you to the next one; the bar shows "2 of 4 sent". If you sent by
+    other means, press <b>Mark as sent</b> (it then reads <b>Sent (undo)</b>, and pressing it again clears the mark);
+    <b>Mark all as sent</b> covers the whole list. A check mark appears beside each name you have written to. When you are done, Datawriter offers a calendar reminder for the next
+    decision the tracker records.</li>
+</ol>
+<div class="box">Datawriter never emails anyone on its own, never posts anything, and stores nothing online.
+Your details stay in your browser's local storage until you clear them. The only outside services it
+talks to are the tracker itself, Esri's public map service for the satellite pictures, and a public ZIP
+code lookup (api.zippopotam.us) for ZIPs outside the bundled states.</div>
+
+<h2>5. Coverage in Beta 0.5</h2>
+<div class="cols">
+  <div>
+    <p>Fully researched (projects, counties, towns, state leaders): Pennsylvania, New York, New Jersey,
+    Maryland, North Carolina, Connecticut, Delaware, Maine, Massachusetts, Rhode Island, New Hampshire,
+    Missouri, Ohio, Indiana, Michigan, Iowa, Kentucky, Alabama, Tennessee, West Virginia, Mississippi,
+    North Dakota, Arkansas, South Dakota, Alaska and Hawaii.</p>
+  </div>
+  <div>
+    <p>State leaders only, waiting on the tracker: the District of Columbia, Virginia, Illinois,
+    Georgia, South Carolina and Florida had no projects in the tracker's database when this version was built.
+    Searches there show the nearest project in a covered state and say so.</p>
+  </div>
+</div>
+<p>Pennsylvania's township and borough boards are not yet included; county and state officials are. Some
+boards publish their rosters only inside meeting agendas, so those cards show the office's mailbox and phone
+instead of names. A few official websites block automated reading entirely; those places carry contact
+details but no names, and the panel says so.</p>
+
+<h2>6. If something goes wrong</h2>
+<table>
+  <tr><th>What you see</th><th>What to do</th></tr>
+  <tr><td>The panel's button does not appear on trackdatacenters.com</td><td>Reload the page. If it still does not appear, open the extensions page and click Datawriter's reload button (the circular arrow), then reload the tracker page.</td></tr>
+  <tr><td>"Couldn't reach the extension's background script"</td><td>Remove Datawriter from the extensions page and load the folder again (the browser sometimes drops the "scripting" permission after an update).</td></tr>
+  <tr><td>The map does not move to the project</td><td>The tracker's map only holds the projects of the state page you are on. Datawriter switches pages for you; if that fails, open the state from the tracker's menu and search again. Iowa has no map page yet.</td></tr>
+  <tr><td>"Nothing tracked near you"</td><td>Read the note under the title: it says whether the tracker lacks your state, has no page for it, or simply has no project within 40 miles. The nearest project is still shown.</td></tr>
+  <tr><td>A ZIP outside the bundled states</td><td>Datawriter looks the ZIP up online and still finds the nearest covered project.</td></tr>
+  <tr><td>A name looks out of date</td><td>Click <b>website ↗</b> on that card to check the official page, and tell CU Amnesty International so the next version can fix it.</td></tr>
+  <tr><td>A letter opens in the wrong email program</td><td>Use <b>Copy letter</b> and paste it where you like. Gmail users: pick <b>Gmail</b>, which opens a compose window in the browser.</td></tr>
+</table>
+
+<h2>7. Versions</h2>
+<p>This is <b>Datawriter, By CUAI, Beta 0.5</b> (build 0.5.0, November 2, 2026). Beta 0.1 (October 23) was the first
+release; 0.1.1 bundled officials and portraits per state; Beta 0.2 reworked the letter flow, then simplified the
+interface (0.2.2) and brought the letters back to the chapter's template wording (0.2.3); Beta 0.5 added the tone and
+detail sliders, confirmed sends, the home ZIP and project-name search. Later releases keep
+the same scheme and move slowly: small fixes and data refreshes bump the last number; new states or new panel
+features bump the middle one; the first non-beta release will be Datawriter 1.0. The version is shown on the
+extension's card in the extensions page. Beta 0.5 added Spanish and Simplified Chinese. Beta 0.5 added the carbon, jobs and timeline figures and the "Did you know?" box, and took water out of the letters except where the tracker records a figure.</p>
+
+<footer>
+  Datawriter, By CUAI · created by CU Amnesty International (CUAI), the Columbia University chapter of Amnesty International · Beta 0.5 · Data from trackdatacenters.com and official government websites, collected
+  October 2026 · Satellite imagery © Esri, Maxar, Earthstar Geographics · Figures from EIA, the Census Bureau,
+  NEA, USDA and NCES (sources are listed in the README inside the folder).
+</footer>
+</body>
+</html>

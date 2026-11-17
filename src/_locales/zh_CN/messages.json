@@ -1,0 +1,14 @@
+{
+    "manifest_name":  {
+                          "message":  "Datawriter, By CUAI"
+                      },
+    "manifest_description":  {
+                                 "message":  "输入邮政编码：查看最近的被追踪数据中心、负责决策的官员，以及一封可直接发送的信件。由 CU Amnesty International 出品。"
+                             },
+    "manifest_action_title":  {
+                                  "message":  "查找最近的数据中心"
+                              },
+    "manifest_command_open":  {
+                                  "message":  "打开 Datawriter"
+                              }
+}

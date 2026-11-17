@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="about.title">About Datawriter, By CUAI</title>
+  <script src="i18n.js"></script>
+  <style>
+    :root { --green: #4b7a4e; --green-deep: #2f5a33; --ink: #162016; --muted: #56625a; --line: #dde4dd; --soft: #f3f6f3; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px 20px 48px; font: 15px/1.5 "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--ink); background: #fff; }
+    main { max-width: 680px; margin: 0 auto; }
+    header { display: flex; align-items: center; gap: 14px; padding-bottom: 14px; border-bottom: 3px solid var(--green); margin-bottom: 20px; }
+    header img { width: 48px; height: 48px; }
+    h1 { margin: 0; font-size: 26px; color: var(--green-deep); }
+    h1 small { display: block; font-size: 14px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+    h2 { font-size: 17px; color: var(--green-deep); margin: 22px 0 6px; }
+    p, li { margin: 0 0 8px; }
+    ol, ul { padding-left: 22px; }
+    .org { padding: 12px 14px; border-radius: 6px; background: var(--soft); border: 1px solid var(--line); }
+    .org b { color: var(--green-deep); }
+    .muted { color: var(--muted); font-size: 13px; }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 0; font-size: 14px; }
+    dt { color: var(--muted); }
+    dd { margin: 0; }
+    a { color: var(--green-deep); }
+    footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12.5px; }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: #e6efe6; --muted: #a7b6aa; --line: #2c3b2e; --soft: #172318; --green-deep: #9fd6a3; }
+      body { background: #111b12; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icons/icon-48.png" alt="">
+    <h1><span data-i18n="about.heading">Datawriter</span> <small data-i18n="about.heading_sub">By CUAI · <span id="ver" data-i18n-slot="version">Beta 0.5</span></small></h1>
+  </header>
+
+  <div class="org">
+    <b data-i18n="about.org_lead">Created by CU Amnesty International (CUAI)</b><span data-i18n="about.org_body">, the Columbia University chapter of Amnesty International.
+    Datawriter is a free browser extension built by student volunteers. It is not affiliated with
+    trackdatacenters.com, whose public data it reads, or with any government body it lists, and it does not speak
+    for Amnesty International as a whole.</span>
+  </div>
+
+  <h2 data-i18n="about.h_purpose">What it is for</h2>
+  <p data-i18n="about.p_purpose">Large data centers are approved by local boards, often with little public notice and under code names. Datawriter
+    turns a ZIP code into the nearest tracked project, puts its size in everyday terms, names the officials who will
+    decide, and gives you a letter to each of them that opens in your own email. The aim is to save the hours it takes to find the
+    right official, the right facts and the right words.</p>
+
+  <h2 data-i18n="about.h_steps">Three steps</h2>
+  <ol>
+    <li data-i18n="about.step1">Type your ZIP or town. Datawriter finds the nearest data center project on the tracker.</li>
+    <li data-i18n="about.step2">See who decides: the local, county and state officials, with their published contacts.</li>
+    <li data-i18n="about.step3">Press the envelope button beside an official, or the green bar under the project title. A letter opens in your email, already filled in. You press Send.</li>
+  </ol>
+
+  <h2 data-i18n="about.h_sources">Where the information comes from</h2>
+  <ul>
+    <li data-i18n="about.src_projects">Projects, sizes and stages: <a href="https://trackdatacenters.com" target="_blank" rel="noopener" data-i18n-slot="link">trackdatacenters.com</a>, read live on its own pages.</li>
+    <li data-i18n="about.src_officials">Officials, titles, emails and portraits: the governments' own websites, collected in October 2026 and dated in each record. Names found only in search results, not on an official page, are left out; where a 2026 name or title could not be confirmed, the panel says so. Party labels appear only where a source states them.</li>
+    <li data-i18n="about.src_comparisons">Comparisons: EIA, the Census Bureau, NEA, NCES, USDA, EPA, AHA and others, listed in full in the README inside the extension folder.</li>
+    <li data-i18n="about.src_zip">ZIP code locations: GeoNames (CC BY 4.0). Satellite imagery: Esri.</li>
+  </ul>
+
+  <h2 data-i18n="about.h_privacy">Privacy</h2>
+  <p data-i18n="about.p_privacy">Datawriter sends nothing on its own. Your name, address, email and phone stay in your browser's local storage and
+    appear only in letters you choose to send. The only outside services it contacts are the tracker, Esri's map
+    service for pictures, and a public ZIP lookup for ZIP codes outside the bundled states.</p>
+
+  <h2 data-i18n="about.h_version">Version</h2>
+  <dl>
+    <dt data-i18n="about.dt_release">Release</dt><dd id="release">Beta 0.5</dd>
+    <dt data-i18n="about.dt_build">Build</dt><dd id="build">0.5.0</dd>
+    <dt data-i18n="about.dt_officials">Officials data</dt><dd data-i18n="about.dd_officials">October 2026</dd>
+    <dt data-i18n="about.dt_coverage">Coverage</dt><dd data-i18n="about.dd_coverage">31 states and the District of Columbia</dd>
+  </dl>
+  <p class="muted" data-i18n="about.p_feedback">Found a wrong name or a dead link? Check the official site linked on the card, then tell CU Amnesty
+    International so the next build can fix it.</p>
+
+  <footer data-i18n="about.footer">Datawriter, By CUAI · Created by CU Amnesty International (CUAI), the Columbia University chapter of Amnesty International · Free to use and share.</footer>
+</main>
+<script>
+  // The version comes from the manifest so this page never goes stale.
+  try {
+    const m = chrome.runtime.getManifest();
+    document.getElementById('ver').textContent = m.version_name || m.version;
+    document.getElementById('release').textContent = m.version_name || m.version;
+    document.getElementById('build').textContent = m.version;
+  } catch (e) { /* opened outside the extension */ }
+  DCF_I18N.init().then(() => DCF_I18N.applyI18n(document));
+</script>
+</body>
+</html>
