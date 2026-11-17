@@ -804,11 +804,14 @@
   // "Did you know?": one short, sourced fact at a time, chosen by the project so it varies between
   // projects. The jobs fact is computed from the tracker's own records.
   const DYK = ['depreciation', 'jobs', 'power'];
+  // The medians scan every row, so they are worked out once per download rather than on every render.
+  let jobMedians = { ts: 0, perm: 0, build: 0 };
   function dykFacts() {
-    const rows = (dataCache && dataCache.rows) || [];
-    const median = (key) => { const v = rows.map((r) => DCF.metric(r, key).min).filter((x) => x > 0).sort((a, b) => a - b); return v.length ? v[Math.floor(v.length / 2)] : 0; };
-    const perm = median('jobsLongTerm');
-    const build = median('jobsConstruction');
+    if (dataCache && jobMedians.ts !== dataCache.ts) {
+      const median = (key) => { const v = dataCache.rows.map((r) => DCF.metric(r, key).min).filter((x) => x > 0).sort((a, b) => a - b); return v.length ? v[Math.floor(v.length / 2)] : 0; };
+      jobMedians = { ts: dataCache.ts, perm: median('jobsLongTerm'), build: median('jobsConstruction') };
+    }
+    const { perm, build } = jobMedians;
     return {
       depreciation: t('panel.dyk_depreciation'),
       jobs: perm && build ? t('panel.dyk_jobs', { perm: DCF.count(perm), build: DCF.count(build) }) : '',
@@ -980,25 +983,25 @@
   // How much a letter to this person can change the outcome, with the reason shown on the badge.
   // The body that casts the binding vote scores highest; recommenders, staff and state officials lower.
   function impact(p, ctx) {
-    const t = String(p.title || '').toLowerCase();
-    const heads = /\b(chair|president|presiding|mayor|first selectman|supervisor|executive|director of the board)\b/.test(t) && !/vice|deputy|pro tem/.test(t);
+    const title = String(p.title || '').toLowerCase();
+    const heads = /\b(chair|president|presiding|mayor|first selectman|supervisor|executive|director of the board)\b/.test(title) && !/vice|deputy|pro tem/.test(title);
     const local = ctx.tier === 'municipal' || (ctx.tier === 'county' && ctx.decides);
     // Secretaries, clerks and liaisons listed on a board are staff, not voting members.
-    const role = ctx.role !== 'staff' && /\b(secretary|clerk|liaison|staff|administrator|coordinator)\b/.test(t) && !heads ? 'staff' : ctx.role;
+    const role = ctx.role !== 'staff' && /\b(secretary|clerk|liaison|staff|administrator|coordinator)\b/.test(title) && !heads ? 'staff' : ctx.role;
     ctx = { ...ctx, role };
     // why is a catalog key, resolved with t() where the badge is drawn so it follows the language.
     let score = 0; let why = '';
     if (ctx.tier === 'state') {
-      if (/governor/.test(t) && !/lieutenant/.test(t)) { score = 68; why = 'panel.why_governor'; }
-      else if (/utilit|public service|psc|puc|bpu|pura|regulatory authority|commerce commission|power agency|regulatory staff|public counsel/.test(t)) { score = 58; why = 'panel.why_utility'; }
-      else if (/siting council|siting board|site evaluation/.test(t)) { score = 56; why = 'panel.why_siting'; }
-      else if (/environment|natural resources|\b(dep|deq|dec|mde|dnr|dnrec|dem|des|epd)\b/.test(t)) { score = 52; why = 'panel.why_environment'; }
-      else if (/\benergy\b/.test(t)) { score = 50; why = 'panel.why_energy'; }
-      else if (/state planning/.test(t)) { score = 46; why = 'panel.why_state_planning'; }
-      else if (/commerce|economic|development|eda/.test(t)) { score = 42; why = 'panel.why_commerce'; }
+      if (/governor/.test(title) && !/lieutenant/.test(title)) { score = 68; why = 'panel.why_governor'; }
+      else if (/utilit|public service|psc|puc|bpu|pura|regulatory authority|commerce commission|power agency|regulatory staff|public counsel/.test(title)) { score = 58; why = 'panel.why_utility'; }
+      else if (/siting council|siting board|site evaluation/.test(title)) { score = 56; why = 'panel.why_siting'; }
+      else if (/environment|natural resources|\b(dep|deq|dec|mde|dnr|dnrec|dem|des|epd)\b/.test(title)) { score = 52; why = 'panel.why_environment'; }
+      else if (/\benergy\b/.test(title)) { score = 50; why = 'panel.why_energy'; }
+      else if (/state planning/.test(title)) { score = 46; why = 'panel.why_state_planning'; }
+      else if (/commerce|economic|development|eda/.test(title)) { score = 42; why = 'panel.why_commerce'; }
       else { score = 30; why = 'panel.why_state_leadership'; }
     } else if (ctx.role === 'staff') {
-      score = local ? 48 : 28; why = /manager|administrator|executive director/.test(t) ? 'panel.why_staff_manager' : 'panel.why_staff';
+      score = local ? 48 : 28; why = /manager|administrator|executive director/.test(title) ? 'panel.why_staff_manager' : 'panel.why_staff';
     } else if (ctx.role === 'governing') {
       score = (local ? 100 : 60) - (heads ? 0 : 16); why = heads ? 'panel.why_governing_chair' : 'panel.why_governing';
     } else if (ctx.role === 'zoning') {
@@ -1093,7 +1096,8 @@
     const idx = (state.topIdx || []).filter((i) => recipients[i]);
     if (!idx.length) { bar.hidden = true; return; }
     const sent = idx.filter((i) => isSent(recipients[i])).length;
-    const names = idx.map((i) => { const p = recipients[i].person; return `${DCF_LETTER.honorific(p) && DCF_LETTER.honorific(p) !== 'Mr./Ms.' ? `${DCF_LETTER.honorific(p)} ` : ''}${p.name}`; }).join(', ');
+    // "Governor Wes Moore"; staff and untitled officials keep their bare name in every language.
+    const names = idx.map((i) => { const p = recipients[i].person; return DCF_LETTER.titled(p) ? `${DCF_LETTER.honorific(p, DCF_I18N.lang)} ${p.name}` : p.name; }).join(', ');
     setHTML(bar, html`<div class="row"><span class="faces"></span><button type="button" class="btn primary" data-act="write-top">${idx.length === 1 ? t('panel.cta_write_one') : t('panel.cta_write_many', { n: idx.length })}</button></div>
       <div class="sub">${sent ? html`<span class="prog">${t('panel.cta_progress', { sent, n: idx.length })}</span>` : ''}${names}</div>`);
     const faces = bar.querySelector('.faces');
@@ -1423,46 +1427,47 @@
 
   // One delegated handler for everything clickable in the results, so re-renders never stack listeners.
   body.addEventListener('click', (e) => {
-    const t = e.target.closest('button');
-    if (!t || !body.contains(t)) return;
-    if (t.dataset.view) {
-      state.view = t.dataset.view;
+    const btn = e.target.closest('button');
+    if (!btn || !body.contains(btn)) return;
+    const { view, pick, kind, act, write } = btn.dataset;
+    if (view) {
+      state.view = view;
       replaceWith(body.querySelector('figure.pic'), picture(state.ranked[state.idx]));
       wireImage();
-    } else if (t.dataset.pick != null) {
-      state.idx = Number(t.dataset.pick);
+    } else if (pick != null) {
+      state.idx = Number(pick);
       state.view = 'site';
       state.showAllSources = false;
       renderResult().catch(showRenderError);
-    } else if (t.classList.contains('shuffle') && t.dataset.kind) {
-      const d = state.alt[t.dataset.kind];
+    } else if (btn.classList.contains('shuffle') && kind) {
+      const d = state.alt[kind];
       d.i = (d.i + 2) % d.items.length;
-      const next = replaceWith(t.closest('.alt'), altBlock(t.dataset.kind));
+      const next = replaceWith(btn.closest('.alt'), altBlock(kind));
       next.classList.add('fresh');
       next.querySelector('.shuffle').focus();
-    } else if (t.dataset.act === 'map-open') {
+    } else if (act === 'map-open') {
       if (isFull()) setFull(false);
       focusMap(true);
-    } else if (t.dataset.act === 'all-sources') {
+    } else if (act === 'all-sources') {
       state.showAllSources = true;
       const y = body.scrollTop;
       renderResult().then(() => { body.scrollTop = y; }, showRenderError);
-    } else if (t.dataset.act === 'refresh') {
+    } else if (act === 'refresh') {
       if (state.origin.zip) search(state.origin.zip, true); else loadData(true).then(runRanking, showRenderError);
-    } else if (t.dataset.act === 'dyk-next') {
+    } else if (act === 'dyk-next') {
       state.dykOffset = (state.dykOffset || 0) + 1;
-      const next = replaceWith(t.closest('section.dyk'), didYouKnow(state.ranked[state.idx].rec));
+      const next = replaceWith(btn.closest('section.dyk'), didYouKnow(state.ranked[state.idx].rec));
       const b = next.querySelector('.shuffle'); if (b) b.focus();
-    } else if (t.dataset.act === 'near-more') {
+    } else if (act === 'near-more') {
       state.nearMore = true;
       const y = body.scrollTop;
       replaceWith(body.querySelector('section.near-blk'), nearby());
       body.scrollTop = y;
-    } else if (t.dataset.write != null) {
-      openComposer([Number(t.dataset.write)]);
-    } else if (t.dataset.act === 'write-all') {
+    } else if (write != null) {
+      openComposer([Number(write)]);
+    } else if (act === 'write-all') {
       openComposer(recipients.map((_, i) => i));
-    } else if (t.dataset.act === 'write-top') {
+    } else if (act === 'write-top') {
       openComposer(state.topIdx || []);
     }
   });
@@ -1665,12 +1670,7 @@
   function reminder(rec) {
     const site = state.sites.muni || state.sites.county || '';
     const siteLine = site ? t('panel.agenda_and_minutes', { site }) : '';
-    const today = new Date().toISOString().slice(0, 10);
-    const iso = (s) => { const [y, m, d] = String(s || '').split('-'); return y && m ? `${y}-${m.padStart(2, '0')}-${(d || '1').padStart(2, '0')}` : ''; };
-    const pending = (Array.isArray(rec.approvals) ? rec.approvals : [])
-      .map((a) => ({ ...a, iso: iso(a.date) }))
-      .filter((a) => a.iso && a.iso >= today && String(a.status || '') === 'pending')
-      .sort((a, b) => a.iso.localeCompare(b.iso))[0];
+    const pending = DCF_LETTER.nextPending(rec); // the same decision the letter's ask names
     if (pending) {
       const [y, m, d] = pending.iso.split('-').map(Number);
       const text = `${DCF.label(DCF.APPROVAL_TYPES, pending.type)}${pending.body ? t('panel.by_body', { body: pending.body }) : ''}`;
@@ -1927,6 +1927,7 @@
 
   // Keep the letter in sync with the signature and personal-line fields without re-rendering the textarea.
   let personalPrev = '';
+  let linksTimer = 0;
   composer.addEventListener('input', (e) => {
     const ta = composer.querySelector('textarea.letter');
     const s = e.target.closest('input[data-slider]');
@@ -1978,7 +1979,8 @@
       refreshLinks();
       return;
     }
-    if (e.target === ta) refreshLinks();
+    // Typing in the letter rebuilds four send links from the whole text; once per pause is enough.
+    if (e.target === ta) { clearTimeout(linksTimer); linksTimer = setTimeout(refreshLinks, 150); }
   });
   composer.addEventListener('change', (e) => {
     const s = e.target.closest('input[data-slider]');
@@ -2051,62 +2053,63 @@
   }
 
   composer.addEventListener('click', async (e) => {
-    const t = e.target.closest('button, a');
-    if (!t) return;
-    if (t.dataset.close != null) { closeComposer(); return; }
-    if (t.dataset.mode) { comp.mode = t.dataset.mode; renderComposer(); return; }
-    if (t.dataset.stop) { applySlider(t.dataset.stop, t.dataset.value); return; }
-    if (t.dataset.step) { comp.i = Math.max(0, Math.min(comp.list.length - 1, comp.i + Number(t.dataset.step))); personalPrev = ''; renderComposer(); composer.scrollTop = 0; return; }
-    if (t.dataset.mark != null) {
+    const el = e.target.closest('button, a');
+    if (!el) return;
+    const d = el.dataset;
+    if (d.close != null) { closeComposer(); return; }
+    if (d.mode) { comp.mode = d.mode; renderComposer(); return; }
+    if (d.stop) { applySlider(d.stop, d.value); return; }
+    if (d.step) { comp.i = Math.max(0, Math.min(comp.list.length - 1, comp.i + Number(d.step))); personalPrev = ''; renderComposer(); composer.scrollTop = 0; return; }
+    if (d.mark != null) {
       const r = recipients[comp.list[comp.i]];
       if (isSent(r)) { await unmarkSent([r]); comp.done = false; renderComposer(); } else { await markSent([r]); advance(); }
       return;
     }
-    if (t.dataset.markAll != null) {
+    if (d.markAll != null) {
       const rs = combinedLetter().recipients;
       if (rs.length && rs.every(isSent)) { await unmarkSent(rs); comp.done = false; } else { await markSent(rs); comp.done = true; }
       renderComposer();
       return;
     }
-    if (t.dataset.confirmSent != null) { const s = t.closest('.handoff'); await confirmSent(s && s.handOffTarget); return; }
-    if (t.dataset.dismiss != null) { const s = t.closest('.handoff'); if (s) s.remove(); return; }
-    if (t.dataset.form) { window.open(t.dataset.form, 'dcf-form', 'popup,width=760,height=900'); return; }
-    if (t.dataset.print != null) {
-      if (!comp.you.name) { toast(DCF_I18N.t('panel.name_first_print'), true); return; }
+    if (d.confirmSent != null) { const s = el.closest('.handoff'); await confirmSent(s && s.handOffTarget); return; }
+    if (d.dismiss != null) { const s = el.closest('.handoff'); if (s) s.remove(); return; }
+    if (d.form) { window.open(d.form, 'dcf-form', 'popup,width=760,height=900'); return; }
+    if (d.print != null) {
+      if (!comp.you.name) { toast(t('panel.name_first_print'), true); return; }
       printLetter(currentLetter().body, ''); // the letter's own head block carries the name, title and mailing address
       return;
     }
-    if (t.dataset.copy != null || t.dataset.copyText != null) {
-      if (t.dataset.copy != null && !comp.you.name) { toast(DCF_I18N.t('panel.name_first_copy'), true); composer.querySelector('details.you').open = true; return; }
-      const text = t.dataset.copyText != null ? t.dataset.copyText : currentLetter().body;
-      const label = t.textContent;
-      try { await navigator.clipboard.writeText(text); t.textContent = DCF_I18N.t('panel.copied'); setTimeout(() => { t.textContent = label; }, 1500); } catch { t.textContent = DCF_I18N.t('panel.copy_manually'); }
+    if (d.copy != null || d.copyText != null) {
+      if (d.copy != null && !comp.you.name) { toast(t('panel.name_first_copy'), true); composer.querySelector('details.you').open = true; return; }
+      const text = d.copyText != null ? d.copyText : currentLetter().body;
+      const label = el.textContent;
+      try { await navigator.clipboard.writeText(text); el.textContent = t('panel.copied'); setTimeout(() => { el.textContent = label; }, 1500); } catch { el.textContent = t('panel.copy_manually'); }
       return;
     }
     // Send links: block until there is a signature, refresh the href from the edited text, remember the
     // method, then wait for a sign that the mail window opened and ask the writer to confirm the send.
     // Everything before the first await runs inside the click, so the link navigates with the edited letter.
-    if (t.tagName === 'A' && t.dataset.mail) {
+    if (el.tagName === 'A' && d.mail) {
       if (!comp.you.name) {
         e.preventDefault();
         composer.querySelector('details.you').open = true;
         const f = composer.querySelector('input[data-you="name"]'); if (f) f.focus();
-        toast(DCF_I18N.t('panel.name_first_send'), true);
+        toast(t('panel.name_first_send'), true);
         return;
       }
-      const key = t.dataset.mail;
+      const key = d.mail;
       const l = currentLetter();
       const long = tooLong(key, l.to, l);
-      t.href = MAIL[key].url(l.to, long ? { ...l, body: pasteNote() } : l);
+      el.href = MAIL[key].url(l.to, long ? { ...l, body: pasteNote() } : l);
       comp.mail = key;
       saveLetterPrefs();
-      const who = comp.mode === 'all' ? DCF_I18N.t('panel.everyone') : recipients[comp.list[comp.i]].person.name;
+      const who = comp.mode === 'all' ? t('panel.everyone') : recipients[comp.list[comp.i]].person.name;
       const target = { all: comp.mode === 'all', rs: comp.mode === 'all' ? combinedLetter().recipients : [recipients[comp.list[comp.i]]] };
       if (long) {
         e.preventDefault();
-        try { await navigator.clipboard.writeText(l.body); } catch { toast(DCF_I18N.t('panel.copy_failed'), true); return; }
-        toast(DCF_I18N.t('panel.letter_copied'));
-        if (MAIL[key].blank) window.open(t.href, '_blank', 'noopener'); else location.href = t.href;
+        try { await navigator.clipboard.writeText(l.body); } catch { toast(t('panel.copy_failed'), true); return; }
+        toast(t('panel.letter_copied'));
+        if (MAIL[key].blank) window.open(el.href, '_blank', 'noopener'); else location.href = el.href;
       }
       const opened = await awaitHandOff(key);
       showHandOff(opened, key, who, target);

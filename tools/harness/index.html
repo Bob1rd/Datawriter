@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <title>Datawriter harness</title>
+  <style>body { margin: 0; font-family: sans-serif; } .fake-map { height: 100vh; background: #dfe8df; display: grid; place-items: center; color: #567; }</style>
+</head>
+<body>
+  <div class="fake-map">stand-in for the tracker's map</div>
+  <!-- The content scripts, in manifest order. Without chrome.* the panel keeps its state in memory and
+       loads data modules from __dcfBase, so the same files run unchanged. -->
+  <script>window.__dcfBase = '/extension/';</script>
+  <script src="/extension/i18n.js"></script>
+  <script src="/extension/states.js"></script>
+  <script src="/extension/finder.js"></script>
+  <script src="/extension/perspectives.js"></script>
+  <script src="/extension/letter.js"></script>
+  <script src="/extension/panel-css.js"></script>
+  <script src="/extension/panel.js"></script>
+</body>
+</html>

@@ -68,11 +68,12 @@ const DCF_LETTER = (() => {
     if (key === MR_MS) return L('letter.salutation_name', { name: p.name });
     return key ? L('letter.salutation_title', { honorific: L(key), last: lastName(p.name) }) : L('letter.salutation_name', { name: p.name });
   }
+  // True when the title gives a real form of address ("Governor", "Mayor"), false for staff and unknown titles.
+  const titled = (p) => { const key = honorificKey(p); return !!key && key !== MR_MS; };
   // "Mayor Hollis", "Commissioner Bubb", or the full name when the title gives no form of address.
   function shortAddress(p, lang = 'en') {
     const L = (k, v) => DCF_I18N.tIn(lang, k, v);
-    const key = honorificKey(p);
-    return key && key !== MR_MS ? L('letter.short_address', { honorific: L(key), last: lastName(p.name) }) : p.name;
+    return titled(p) ? L('letter.short_address', { honorific: L(honorificKey(p)), last: lastName(p.name) }) : p.name;
   }
   // Elected officials take "The Honorable" on the address block; staff and appointed boards do not.
   const ELECTED = /governor|attorney general|secretary of state|treasurer|auditor|mayor|county executive|judge|senator|delegate|representative|assembly|legislator|council|alder|select(man|woman|person)|supervisor|trustee|commissioner|freeholder|magistrate/i;
@@ -187,16 +188,17 @@ const DCF_LETTER = (() => {
     return list;
   }
 
-  // The next pending decision on the tracker's record, if it has a date that is still ahead.
-  function nextDate(rec) {
+  // The next pending approval on the tracker's record whose date is still ahead, with its date as
+  // "YYYY-MM-DD" in iso. Shared with the panel's reminder, so both read the record the same way.
+  function nextPending(rec) {
     const today = new Date().toISOString().slice(0, 10);
     const iso = (s) => { const [y, m, d] = String(s || '').split('-'); return y && m ? `${y}-${m.padStart(2, '0')}-${(d || '1').padStart(2, '0')}` : ''; };
-    const pending = (Array.isArray(rec.approvals) ? rec.approvals : [])
-      .map((a) => ({ date: a.date, iso: iso(a.date), status: String(a.status || '') }))
-      .filter((a) => a.iso && a.iso >= today && a.status === 'pending')
-      .sort((a, b) => a.iso.localeCompare(b.iso));
-    return pending[0] ? DCF.fmtDate(pending[0].date) : '';
+    return (Array.isArray(rec.approvals) ? rec.approvals : [])
+      .map((a) => ({ ...a, iso: iso(a.date) }))
+      .filter((a) => a.iso && a.iso >= today && String(a.status || '') === 'pending')
+      .sort((a, b) => a.iso.localeCompare(b.iso))[0] || null;
   }
+  const nextDate = (rec) => { const p = nextPending(rec); return p ? DCF.fmtDate(p.date) : ''; };
 
   // Facts shared by every tone, written around whatever the tracker does not know.
   function facts(rec, hit, L) {
@@ -387,5 +389,5 @@ const DCF_LETTER = (() => {
     return { call, voicemail };
   }
 
-  return { build, salutation, honorific, shortAddress, callScript, TONES, TONE_ORDER, DETAILS, DETAIL_ORDER };
+  return { build, salutation, honorific, titled, shortAddress, nextPending, callScript, TONES, TONE_ORDER, DETAILS, DETAIL_ORDER };
 })();

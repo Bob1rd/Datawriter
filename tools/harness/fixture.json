@@ -1,0 +1,56 @@
+{
+  "data": [
+    {
+      "id": 9001,
+      "slug": "harness-campus",
+      "name": "Harness Campus",
+      "state": "Pennsylvania",
+      "stateSlug": "pennsylvania",
+      "phase": "proposed",
+      "type": "Data Center",
+      "niche": ["ai", "cloud"],
+      "lat": 41.3860,
+      "lon": -75.6950,
+      "address": "1 Keyser Avenue",
+      "locationConfidence": "approximate",
+      "municipality": { "towns": ["Scranton"], "counties": ["Lackawanna County"] },
+      "capacityMw": 300,
+      "capacityMaxMw": 900,
+      "sizeAcres": 420,
+      "facilitySizeSqft": 1800000,
+      "numberOfBuildings": 3,
+      "numberOfGenerators": 60,
+      "jobsConstruction": 1200,
+      "jobsLongTerm": 90,
+      "dateAnnounced": "2026-3-12",
+      "dateOnline": "2029",
+      "dateUpdated": "2026-10-20",
+      "powerSource": ["grid", "gas"],
+      "btmPower": "true",
+      "dedicatedSubstation": "true",
+      "coolingSource": "water",
+      "coolingType": "closed",
+      "waterUse": [{ "amount": 1500000, "unit": "gallons/day", "type": "potable" }],
+      "stakeholders": { "D": ["Harness Development LLC"], "U": ["PPL Electric"] },
+      "approvals": [
+        { "type": "rezoning", "status": "pending", "body": "Scranton City Council", "date": "2027-2-9" }
+      ],
+      "info": "A stand-in record used only by the test harness.\\nIt exercises every card in the panel.",
+      "sources": [{ "id": "https://example.com/harness", "text": "Harness fixture", "date": "2026-10-01" }]
+    },
+    {
+      "id": 9002,
+      "slug": "second-site",
+      "name": "Second Site",
+      "state": "Pennsylvania",
+      "stateSlug": "pennsylvania",
+      "phase": "operational",
+      "lat": 41.2,
+      "lon": -75.9,
+      "municipality": { "towns": ["Wilkes-Barre"], "counties": ["Luzerne County"] },
+      "capacityMw": 48,
+      "sizeAcres": 30
+    }
+  ],
+  "nextCursor": null
+}
